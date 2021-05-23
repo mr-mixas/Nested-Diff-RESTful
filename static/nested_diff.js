@@ -28,9 +28,13 @@ function diff() {
         })
     }).done(function(data, textStatus, xhr) {
         if ($('#dif-ofmt').val() == 'json') {
-            show_diff(JSON.stringify(data, null, 2))
+            show_diff_text(JSON.stringify(data, null, 2));
+        } else if ($('#dif-ofmt').val() == 'term') {
+            var ansi_up = new AnsiUp;
+            var html = ansi_up.ansi_to_html(data);
+            show_diff_html('<span>' + html + '</span>');
         } else {
-            show_diff(data)
+            show_diff_text(data);
         }
     }).fail(function(data, textStatus) {
         show_error(data['statusText'] + ': ' + data['responseText']);
@@ -43,10 +47,19 @@ function hide_result_fields() {
     });
 }
 
-function show_diff(diff) {
-    $('#dif-body').text(diff);
+function show_diff() {
     $('#dif-label').removeClass("d-none");
     $('#dif-body').removeClass("d-none");
+}
+
+function show_diff_html(html) {
+    $('#dif-body').html(html);
+    show_diff();
+}
+
+function show_diff_text(text) {
+    $('#dif-body').text(text);
+    show_diff();
 }
 
 function show_error(error) {
