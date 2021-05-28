@@ -17,8 +17,7 @@
 from flask import Flask, Response, jsonify, render_template, request
 
 from nested_diff import Differ, Patcher
-from nested_diff.fmt import TextFormatter, TermFormatter
-
+from nested_diff.fmt import HtmlFormatter, TextFormatter, TermFormatter
 
 app = Flask(__name__)
 
@@ -30,6 +29,8 @@ def format_diff_response(fmt, diff, opts):
         formatter = TextFormatter
     elif fmt == 'term':
         formatter = TermFormatter
+    elif fmt == 'html':
+        formatter = HtmlFormatter
     else:
         return Response('Unsupported format ' + fmt, status=400)
 
@@ -42,7 +43,8 @@ def format_diff_response(fmt, diff, opts):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    # this page is almost never reloaded, so it is OK to embed css in it
+    return render_template('index.html', html_fmt_css=HtmlFormatter.get_css())
 
 
 @app.route('/ping')

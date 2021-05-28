@@ -1,9 +1,0 @@
-a {
-    color: var(--bs-black);
-    text-decoration: none;
-}
-
-.dif-body {
-    font-family: var(--bs-font-monospace);
-    white-space: pre;
-}

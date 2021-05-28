@@ -9,6 +9,20 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
         <script src="/static/ansi_up.js"></script>
         <script src="/static/nested_diff.js"></script>
+        <style>
+            /* nested_diff lib html formatter css */
+            {{html_fmt_css}}
+
+            /* main UI css */
+            a {
+                color: var(--bs-black);
+                text-decoration: none;
+            }
+
+            .dif-body {
+                font-family: var(--bs-font-monospace);
+            }
+        </style>
     </head>
 <body>
 <div class="container">
@@ -58,6 +72,7 @@
                     <label class="input-group-text" for="dif-ofmt">Output format</label>
                     <select class="form-select" id="dif-ofmt">
                         <option value="text" selected>text</option>
+                        <option value="html">html</option>
                         <option value="term">term</option>
                         <option value="json">json</option>
                     </select>

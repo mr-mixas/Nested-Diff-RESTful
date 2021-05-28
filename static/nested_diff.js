@@ -33,6 +33,8 @@ function diff() {
             var ansi_up = new AnsiUp;
             var html = ansi_up.ansi_to_html(data);
             show_diff_html('<span>' + html + '</span>');
+        } else if ($('#dif-ofmt').val() == 'html') {
+            show_diff_html(data);
         } else {
             show_diff_text(data);
         }
