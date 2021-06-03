@@ -1,11 +1,11 @@
 def test_invalid_request(client):
-    rv = client.post('/format', json=['garbage'])
+    rv = client.post('/api/v1/format', json=['garbage'])
 
     assert rv.status_code == 400
 
 
 def test_format(client):
-    rv = client.post('/format', json={
+    rv = client.post('/api/v1/format', json={
         'diff': {'N': 'b', 'O': 'a'},
         'ofmt': 'text',
     })

@@ -52,7 +52,7 @@ def health_check():
     return Response('pong', status=200)
 
 
-@app.route('/diff', methods=['POST'])
+@app.route('/api/v1/diff', methods=['POST'])
 def diff():
     try:
         diff_opts = request.json.get('diff_opts', {'U': False})
@@ -76,7 +76,7 @@ def diff():
     return format_diff_response(ofmt, diff, ofmt_opts)
 
 
-@app.route('/format', methods=['POST'])
+@app.route('/api/v1/format', methods=['POST'])
 def format():
     try:
         diff = request.json.get('diff', {})
@@ -91,7 +91,7 @@ def format():
         return Response('Incorrect arguments', status=400)
 
 
-@app.route('/patch', methods=['POST'])
+@app.route('/api/v1/patch', methods=['POST'])
 def patch():
     try:
         return jsonify(Patcher().patch(

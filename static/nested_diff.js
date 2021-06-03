@@ -11,7 +11,7 @@ function diff() {
 
     $.ajax({
         type: 'POST',
-        url: '/diff',
+        url: '/api/v1/diff',
         contentType: 'application/json',
         data: JSON.stringify({
             a: a,
