@@ -43,6 +43,18 @@ function diff() {
     })
 }
 
+function handle_exclusive_opts() {
+    // disable textual context when O or N are disabled
+    if ($('#dif-opt-N').is(':checked') && $('#dif-opt-O').is(':checked')) {
+        $('#dif-opt-text-ctx').attr('disabled', false);
+        $('#dif-opt-text-ctx').val($('#dif-opt-text-ctx').attr('__stash'))
+    } else if (!$('#dif-opt-text-ctx').attr('disabled')) {
+        $('#dif-opt-text-ctx').attr('disabled', true);
+        $('#dif-opt-text-ctx').attr('__stash', $('#dif-opt-text-ctx').val());
+        $('#dif-opt-text-ctx').val(-1)  // disable
+    }
+}
+
 function hide_result_fields() {
     $('.dif-result').each(function(){
         $(this).addClass('d-none');
