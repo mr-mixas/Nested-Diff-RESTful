@@ -22,7 +22,7 @@ function diff() {
                 O: $('#dif-opt-O').is(':checked'),
                 R: $('#dif-opt-R').is(':checked'),
                 U: $('#dif-opt-U').is(':checked'),
-                multiline_diff_context: Number($('#dif-opt-text-ctx').val()),
+                text_diff_ctx: Number($('#dif-opt-text-ctx').val()),
             },
             ofmt: $('#dif-ofmt').val(),
         })
@@ -67,7 +67,15 @@ function show_diff() {
 }
 
 function show_diff_html(html) {
-    $('#dif-body').html(html);
+    $.ajax({
+        type: 'GET',
+        url: '/api/v1/nested_diff.js',
+    }).done(function(data, textStatus, xhr) {
+        $('#dif-body').html(html + '<script>' + data + '</script>')
+    }).fail(function(data, textStatus) {
+        show_error(data['statusText'] + ': ' + data['responseText']);
+    })
+
     show_diff();
 }
 

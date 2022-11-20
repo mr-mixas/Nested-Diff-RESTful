@@ -16,8 +16,9 @@
 
 from flask import Flask, Response, jsonify, render_template, request
 
-from nested_diff import Differ, Patcher
-from nested_diff.fmt import HtmlFormatter, TextFormatter, TermFormatter
+from nested_diff import Differ, Patcher, TYPE_HANDLERS
+from nested_diff.formatters import HtmlFormatter, TextFormatter, TermFormatter
+from nested_diff.handlers import TextHandler
 
 app = Flask(__name__)
 
@@ -43,8 +44,7 @@ def format_diff_response(fmt, diff, opts):
 
 @app.route('/')
 def index():
-    # this page is almost never reloaded, so it is OK to embed css in it
-    return render_template('index.html', html_fmt_css=HtmlFormatter.get_css())
+    return render_template('index.html')
 
 
 @app.route('/ping')
@@ -59,8 +59,17 @@ def diff():
     except AttributeError:
         return Response('Object expected', status=400)
 
+    extra_handlers = []
+
+    text_diff_ctx = diff_opts.pop('text_diff_ctx', -1)
+    if text_diff_ctx >= 0:
+        extra_handlers.append(TextHandler(context=text_diff_ctx))
+
     try:
-        diff = Differ(**diff_opts).diff(
+        _, diff = Differ(
+            handlers=TYPE_HANDLERS + tuple(extra_handlers),
+            **diff_opts,
+        ).diff(
             request.json.get('a', None),
             request.json.get('b', None),
         )
@@ -100,6 +109,20 @@ def patch():
         ))
     except Exception:
         return Response('Incorrect arguments', status=400)
+
+
+@app.route('/api/v1/nested_diff.css')
+def nested_diff_css():
+    return Response(HtmlFormatter.get_css(), mimetype='text/css', status=200)
+
+
+@app.route('/api/v1/nested_diff.js')
+def nested_diff_script():
+    return Response(
+        HtmlFormatter().get_script(),
+        mimetype='text/javascript',
+        status=200,
+    )
 
 
 if __name__ == '__main__':
