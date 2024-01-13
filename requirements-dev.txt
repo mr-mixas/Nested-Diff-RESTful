@@ -1,3 +1,4 @@
+flake8 < 5
 flake8-commas
 flake8-bugbear
 flake8_quotes
