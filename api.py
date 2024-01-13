@@ -55,7 +55,15 @@ def format_diff_response(fmt, diff, opts):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    resp = Response(
+        render_template('index.html'),
+        mimetype='text/html',
+        status=200,
+    )
+    resp.add_etag()
+    resp.make_conditional(request)
+
+    return resp
 
 
 @app.route('/ping')
@@ -124,16 +132,24 @@ def patch():
 
 @app.route('/api/v1/nested_diff.css')
 def nested_diff_css():
-    return Response(HtmlFormatter.get_css(), mimetype='text/css', status=200)
+    resp = Response(HtmlFormatter.get_css(), mimetype='text/css', status=200)
+    resp.add_etag()
+    resp.make_conditional(request)
+
+    return resp
 
 
 @app.route('/api/v1/nested_diff.js')
 def nested_diff_script():
-    return Response(
+    resp = Response(
         HtmlFormatter().get_script(),
         mimetype='text/javascript',
         status=200,
     )
+    resp.add_etag()
+    resp.make_conditional(request)
+
+    return resp
 
 
 if __name__ == '__main__':
