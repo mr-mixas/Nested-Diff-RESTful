@@ -14,13 +14,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 from flask import Flask, Response, jsonify, render_template, request
 
 from nested_diff import Differ, Patcher, TYPE_HANDLERS
 from nested_diff.formatters import HtmlFormatter, TextFormatter, TermFormatter
 from nested_diff.handlers import TextHandler
 
-app = Flask(__name__)
+
+flask_kwargs = {}
+
+for kw in ('static_folder', 'static_url_path', 'template_folder'):
+    try:
+        flask_kwargs[kw] = os.environ['NESTED_DIFF_REST_' + kw.upper()]
+    except KeyError:
+        pass
+
+app = Flask(__name__, **flask_kwargs)
 
 
 def format_diff_response(fmt, diff, opts):
@@ -126,4 +137,8 @@ def nested_diff_script():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(
+        host=os.environ.get('NESTED_DIFF_REST_HOST', 'localhost'),
+        port=os.environ.get('NESTED_DIFF_REST_PORT', 8080),
+        debug=True if 'NESTED_DIFF_REST_DEBUG' in os.environ else False,
+    )
