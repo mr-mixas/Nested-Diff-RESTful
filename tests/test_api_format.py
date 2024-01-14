@@ -5,10 +5,13 @@ def test_invalid_request(client):
 
 
 def test_format(client):
-    rv = client.post('/api/v1/format', json={
-        'diff': {'N': 'b', 'O': 'a'},
-        'ofmt': 'text',
-    })
+    rv = client.post(
+        '/api/v1/format',
+        json={
+            'diff': {'N': 'b', 'O': 'a'},
+            'ofmt': 'text',
+        },
+    )
 
     assert rv.status_code == 200
     assert rv.content_type.startswith('text/plain')

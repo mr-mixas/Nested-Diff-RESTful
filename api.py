@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright 2021 Michael Samoglyadov
+# Copyright 2021-2024 Michael Samoglyadov
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -119,10 +119,12 @@ def format():
 @app.route('/api/v1/patch', methods=['POST'])
 def patch():
     try:
-        return jsonify(Patcher().patch(
-            request.json['target'],
-            request.json['patch'],
-        ))
+        return jsonify(
+            Patcher().patch(
+                request.json['target'],
+                request.json['patch'],
+            )
+        )
     except Exception:
         return Response('Incorrect arguments', status=400)
 

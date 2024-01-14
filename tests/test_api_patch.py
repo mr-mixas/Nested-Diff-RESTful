@@ -5,7 +5,9 @@ def test_invalid_request(client):
 
 
 def test_patch(client):
-    rv = client.post('/api/v1/patch', json={'target': 'a', 'patch': {'N': 'b'}})
+    rv = client.post(
+        '/api/v1/patch', json={'target': 'a', 'patch': {'N': 'b'}}
+    )
 
     assert rv.status_code == 200
     assert rv.content_type == 'application/json'

@@ -1,0 +1,8 @@
+[tool.pytest.ini_options]
+addopts = '-vv --cov=api --cov-fail-under=96 --no-cov-on-fail --ruff --ruff-format'
+
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.format]
+quote-style = 'single'

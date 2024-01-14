@@ -1,0 +1,35 @@
+name: tests
+on: ["push", "pull_request"]
+jobs:
+  tests:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ['ubuntu-latest']
+        python-version:
+        - '3.8'
+        - '3.9'
+        - '3.10'
+        - '3.11'
+        - '3.12'
+        include:
+        - os: macos-latest
+          python-version: '3.x'
+        - os: windows-latest
+          python-version: '3.x'
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }} on ${{ matrix.architecture }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        pip install --quiet --upgrade pip
+        pip install pip install -r requirements.txt -r requirements-dev.txt
+
+    - name: Run tests
+      run: |
+        pytest
