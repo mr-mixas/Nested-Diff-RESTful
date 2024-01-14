@@ -1,0 +1,7 @@
+<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'>
+  <style>
+    text {fill: #000; font: bold 120px sans-serif}
+    @media (prefers-color-scheme:dark) {text {fill: #fff}}
+  </style>
+  <text x='5' y='95'>D</text>
+</svg>
