@@ -2,6 +2,18 @@ def test_invalid_request(client):
     rv = client.post('/api/v1/diff', json=['garbage'])
 
     assert rv.status_code == 400
+    assert rv.data == b'Bad request'
+
+
+def test_invalid_diff_opts(client):
+    rv = client.post('/api/v1/diff', json={
+        'a': 'a',
+        'b': 'b',
+        'diff_opts': {'__unsupported__': True},
+    })
+
+    assert rv.status_code == 400
+    assert rv.data == b'Incorrect diff options'
 
 
 def test_default(client):

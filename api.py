@@ -18,7 +18,7 @@ import os
 
 from flask import Flask, Response, jsonify, render_template, request
 
-from nested_diff import Differ, Patcher, TYPE_HANDLERS
+from nested_diff import Differ, Patcher
 from nested_diff.formatters import HtmlFormatter, TextFormatter, TermFormatter
 from nested_diff.handlers import TextHandler
 
@@ -74,26 +74,23 @@ def health_check():
 @app.route('/api/v1/diff', methods=['POST'])
 def diff():
     try:
-        diff_opts = request.json.get('diff_opts', {'U': False})
-    except AttributeError:
-        return Response('Object expected', status=400)
-
-    extra_handlers = []
-
-    text_diff_ctx = diff_opts.pop('text_diff_ctx', -1)
-    if text_diff_ctx >= 0:
-        extra_handlers.append(TextHandler(context=text_diff_ctx))
+        old = request.json.get('a', None)
+        new = request.json.get('b', None)
+    except Exception:
+        return Response('Bad request', status=400)
 
     try:
-        _, diff = Differ(
-            handlers=TYPE_HANDLERS + tuple(extra_handlers),
-            **diff_opts,
-        ).diff(
-            request.json.get('a', None),
-            request.json.get('b', None),
-        )
+        diff_opts = request.json.get('diff_opts', {'U': False})
+        text_diff_ctx = diff_opts.pop('text_diff_ctx', -1)
+
+        differ = Differ(**diff_opts)
+
+        if text_diff_ctx >= 0:
+            differ.set_handler(TextHandler(context=text_diff_ctx))
     except Exception:
-        return Response('Incorrect options', status=400)
+        return Response('Incorrect diff options', status=400)
+
+    _, diff = differ.diff(old, new)
 
     ofmt = request.json.get('ofmt', 'json')
     if ofmt == 'json':
