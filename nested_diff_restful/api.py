@@ -151,7 +151,7 @@ def nested_diff_script():
     return resp
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: nocover
     app.run(
         host=os.environ.get('NESTED_DIFF_REST_HOST', 'localhost'),
         port=os.environ.get('NESTED_DIFF_REST_PORT', 8080),

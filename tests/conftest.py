@@ -1,6 +1,6 @@
 import pytest
 
-from api import app
+from nested_diff_restful.api import app
 
 
 @pytest.fixture

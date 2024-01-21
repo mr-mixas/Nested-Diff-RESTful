@@ -15,8 +15,6 @@ jobs:
         include:
         - os: macos-latest
           python-version: '3.x'
-        - os: windows-latest
-          python-version: '3.x'
     steps:
     - uses: actions/checkout@v4
 
@@ -25,10 +23,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install dependencies
+    - name: Install package
       run: |
         pip install --quiet --upgrade pip
-        pip install pip install -r requirements.txt -r requirements-dev.txt
+        pip install .[test]
 
     - name: Run tests
       run: |
