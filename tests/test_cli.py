@@ -1,5 +1,6 @@
-import pytest
 import unittest.mock
+
+import pytest
 
 import nested_diff_restful
 

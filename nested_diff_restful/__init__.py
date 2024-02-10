@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # Copyright 2024 Michael Samoglyadov
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,6 +22,7 @@ __website__ = 'https://github.com/mr-mixas/Nested-Diff-RESTful'
 
 def start_wsgi_server():
     import gunicorn.app.base
+
     import nested_diff_restful.api
 
     class WSGIServer(gunicorn.app.base.Application):

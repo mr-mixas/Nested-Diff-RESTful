@@ -30,6 +30,7 @@ test = [
     'pytest',
     'pytest-cov',
     'pytest-ruff',
+    'ruff==0.1.15',  # pin version for reproducible results
 ]
 
 [project.urls]
@@ -49,6 +50,23 @@ addopts = """
 
 [tool.ruff]
 line-length = 79
+select = ['ALL']
+ignore = [
+    'ANN',  # type annotations
+    'D',  # docstrings
+    'SIM105',  # contextlib.suppress is slower than try-except-pass
+]
+
+[tool.ruff.extend-per-file-ignores]
+'tests/*' = [
+    'E501',  # long lines
+    'PLR2004',  # hardcoded value used in comparison
+    'S101',  # use of `assert`
+]
 
 [tool.ruff.format]
 quote-style = 'single'
+
+[tool.ruff.lint]
+flake8-quotes.inline-quotes = 'single'
+isort.lines-between-types = 1
