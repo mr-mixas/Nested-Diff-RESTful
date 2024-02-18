@@ -14,13 +14,17 @@
 
 """REST API and web UI for nested-diff"""
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __author__ = 'Michael Samoglyadov'
 __license__ = 'Apache License, Version 2.0'
 __website__ = 'https://github.com/mr-mixas/Nested-Diff-RESTful'
 
 
 def start_wsgi_server():
+    import gunicorn
+
+    gunicorn.__version__ = __version__
+
     import gunicorn.app.base
 
     import nested_diff_restful.api
