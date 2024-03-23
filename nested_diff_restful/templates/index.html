@@ -2,6 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
+        <meta name="description" content="Nested-Diff web UI">
+        <meta name="keywords" content="nested-diff,nested-diff-restful,recursive-diff">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Nested-Diff</title>
         <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
@@ -21,7 +23,7 @@
             }
         </style>
     </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <div class="container">
     <form>
         <h1><a href="https://github.com/mr-mixas/Nested-Diff.py">Nested-Diff</a></h1>
@@ -88,5 +90,9 @@
         </div>
     </form>
 </div>
+<footer class="footer bg-light mt-auto small text-center text-secondary">
+    nested-diff <a class="text-secondary" href="https://pypi.org/project/nested-diff/{{ nested_diff_version }}/">{{ nested_diff_version }}</a>;
+    nested-diff-restful <a class="text-secondary" href="https://pypi.org/project/nested-diff-restful/{{ nested_diff_restful_version }}/">{{ nested_diff_restful_version }}</a>
+</footer>
 </body>
 </html>

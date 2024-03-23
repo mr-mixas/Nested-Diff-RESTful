@@ -16,8 +16,11 @@ import os
 
 from flask import Flask, Response, jsonify, render_template, request
 from nested_diff import Differ, Patcher
+from nested_diff import __version__ as nested_diff_version
 from nested_diff.formatters import HtmlFormatter, TermFormatter, TextFormatter
 from nested_diff.handlers import TextHandler
+
+from nested_diff_restful import __version__ as nested_diff_restful_version
 
 flask_kwargs = {}
 
@@ -52,7 +55,11 @@ def format_diff_response(fmt, diff, opts):
 @app.route('/')
 def index():
     resp = Response(
-        render_template('index.html'),
+        render_template(
+            'index.html',
+            nested_diff_version=nested_diff_version,
+            nested_diff_restful_version=nested_diff_restful_version,
+        ),
         mimetype='text/html',
         status=200,
     )
