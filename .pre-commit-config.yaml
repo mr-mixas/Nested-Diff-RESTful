@@ -1,0 +1,29 @@
+---
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  hooks:
+  - id: check-added-large-files
+  - id: check-case-conflict
+  - id: check-json
+  - id: check-shebang-scripts-are-executable
+  - id: check-symlinks
+  - id: check-toml
+  - id: check-vcs-permalinks
+  - id: check-yaml
+  - id: double-quote-string-fixer
+  rev: v4.5.0
+
+- repo: https://github.com/crate-ci/typos
+  hooks:
+  - id: typos
+  rev: v1.19.0
+
+- repo: https://github.com/jackdewinter/pymarkdown
+  hooks:
+  - id: pymarkdown
+  rev: v0.9.18
+
+- repo: https://github.com/rhysd/actionlint
+  hooks:
+  - id: actionlint
+  rev: v1.6.27

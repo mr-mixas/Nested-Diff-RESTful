@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <title>Nested-Diff</title>
         <meta charset="utf-8">
         <meta name="description" content="Nested-Diff web UI">
         <meta name="keywords" content="nested-diff,nested-diff-restful,recursive-diff">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Nested-Diff</title>
-        <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+        <link href="/static/favicon.svg" rel="icon" type="image/svg+xml">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="/api/v1/nested_diff.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
@@ -27,7 +27,7 @@
 <div class="container">
     <form>
         <h1><a href="https://github.com/mr-mixas/Nested-Diff.py">Nested-Diff</a></h1>
-        <div class="input-group mb-3" id="dif-input">
+        <div class="input-group mb-3">
             <span class="input-group-text">A:</span>
             <textarea class="form-control font-monospace" id="dif-a" rows="5">[0, 1, 2, "multi\nline"]</textarea>
             <span class="input-group-text">B:</span>
